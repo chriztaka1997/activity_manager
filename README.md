@@ -20,12 +20,12 @@ Category:
    - activity name
    - category
    - Start time
- -For target:
-  * target date (hidden for database)
-  - activity name
-  - target hour or reptition
-  - Execution (how many rep was actually done)(default value: 0)
-  - status (default value: incpmplete)
+ - For target:
+   * target date (hidden for database)
+   - activity name
+   - target hour or reptition
+   - Execution (how many rep was actually done)(default value: 0)
+   - status (default value: incpmplete)
  
  Database:
  - Long Term target
