@@ -28,10 +28,11 @@ Category:
    - status (default value: incpmplete)
  
  Database:
- - Long Term target
+ - Long Term target (key:number, target name, description/progress)
  - Today target (based on dates)
  - Today activity (based on dates)
  - Summary (per week per day) (2 stage colum name db)
+ - Weekly summary (Based on number)
  
  Summary:
  - what is the total time spend on a category (improvement from yesterday)
