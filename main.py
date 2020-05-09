@@ -9,3 +9,4 @@ def main():
     '''
 
     print("Hello World")
+    print("Testing shortcut")
