@@ -14,7 +14,7 @@ def printing_all(long_term, targets, today_activity):
     '''
     print("Long Term Targets: ")
     for i in long_term:
-        print("")
+        print("test")
 
 
 
