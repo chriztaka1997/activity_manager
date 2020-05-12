@@ -1,7 +1,10 @@
 import json
 from os import path
+from datetime import date
+from datetime import datetime as dt
 import time
 
+DATE_FORMAT = "%Y-%m-%d"
 
 def printing_all(long_term, targets, today_activity):
     '''
@@ -12,9 +15,28 @@ def printing_all(long_term, targets, today_activity):
     :param today_activity: set
     :return: none
     '''
+    today_date = date.today()
+
     print("Long Term Targets: ")
     for i in long_term:
-        print("test")
+        #TODO: print in the format of "1. activity_name  type(proj/gym)  proggress/Des
+        print(str(i)+". "+str(long_term[i]))
+
+
+    print("Todays target: ")
+    key = today_date.strftime(DATE_FORMAT)
+    if key in targets:
+        today_target = targets[key]
+        for i in today_target:
+            #TODO: print in the format of "1. activity_name  status
+            print(str(i)+". "+str(today_target[i]))
+    else: print("NONE")
+
+
+
+
+
+
 
 
 
@@ -34,27 +56,30 @@ def main():
     weekly_summary_path = "./Database/weekly_summary.json"
 
     ## This is loading the database ###
-    if (path.exists(long_term_path)): long_term_target = json.loads(open(long_term_path,"r"))
+    if (path.exists(long_term_path)): long_term_target = json.load(open(long_term_path,"r"))
     else: long_term_target = {}
 
-    if (path.exists(targets_path)): targets = json.loads(open(targets_path,"r"))
+    if (path.exists(targets_path)): targets = json.load(open(targets_path,"r"))
     else: targets = {}
 
-    if (path.exists(today_activity_path)): today_activity = json.loads(open(today_activity_path,"r"))
+    if (path.exists(today_activity_path)): today_activity = json.load(open(today_activity_path,"r"))
     else: today_activity = {}
 
-    if(path.exists(summary_path)): summary = json.loads(open(summary_path,"r"))
+    if(path.exists(summary_path)): summary = json.load(open(summary_path,"r"))
     else: summary = {}
 
-    if (path.exists(weekly_summary_path)): weekly_summary = json.loads(open(weekly_summary_path,"r"))
+    if (path.exists(weekly_summary_path)): weekly_summary = json.load(open(weekly_summary_path,"r"))
     else: weekly_summary = {}
 
     # Ask for user input
     # assuming the user input is always valid
 
 
-
-    # TODO: json dumps
+    ## This json dump, loading back the data#####
+    json.dump(long_term_target, open(long_term_path, 'w'))
+    json.dump(targets, open(targets_path, 'w'))
+    json.dump(today_activity, open(today_activity_path, 'w'))
+    json.dump(summary, open(summary_path, 'w'))
+    json.dump(weekly_summary, open(weekly_summary_path, 'w'))
 
 # main()
-print(time.localtime())
