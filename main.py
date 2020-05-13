@@ -37,9 +37,6 @@ def printing_all(long_term, targets, today_activity):
 
 
 
-
-
-
 def main():
     '''
     This is the main fucntion where the code going to be called
