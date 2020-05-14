@@ -8,9 +8,12 @@ from journal import Journal
 DATE_FORMAT = "%Y-%m-%d"
 
 
-
-
-
+def user_input():
+    print("\n")
+    print("Option to choose from: ")
+    print("1. Add")
+    print("2. Update")
+    print("3. Delete")
 
 
 
@@ -24,4 +27,5 @@ def main():
     # assuming the user input is always valid
 
     journal = Journal()
-
+    journal.display_today()
+    user_input()

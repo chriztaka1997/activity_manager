@@ -54,50 +54,80 @@ class Journal:
     def update_long_term(self,num,activity, des):
         self.long_term_target[num]= {attributes['an']:activity,attributes['des']:des}
 
-    def get_target(self,date):
-        return self.targets[date]
+    def del_long_term(self, num):
+        length = len(self.long_term_target)
+        if num == length: del self.long_term_target[num]
+        else:
+            for i in range(num, length):
+                self.long_term_target[i] = self.long_term_target[i+1]
+            del self.long_term_target[length]
 
-    def append_target_on_date(self, date, target_name, des):
-        target_date = self.targets[date]
+
+    def get_target(self,d):
+        return self.targets[d]
+
+    def append_target_on_date(self, d, target_name, des):
+        target_date = self.targets[d]
         length = len(target_date)
         target_date[length+1] = {attributes['an']:target_name,attributes['des']:des}
 
-    def update_target_on_date(self,date, num, target_name, des):
-        target_date = self.targets[date]
+    def update_target_on_date(self,d, num, target_name, des):
+        target_date = self.targets[d]
         target_date[num] = {attributes['an']:target_name,attributes['des']:des}
 
-    def get_today_activity(self,date):
-        return self.today_activity[date]
+    def del_target_on_date(self,d,num):
+        target_date = self.targets[d]
+        length = len(target_date)
+        if num == length:
+            del target_date[num]
+        else:
+            for i in range(num, length):
+                target_date[i] = target_date[i + 1]
+            del target_date[length]
 
-    def append_today_activity(self,date, activity_name, time):
-        today_act = self.today_activity[date]
+
+    def get_today_activity(self,d):
+        return self.today_activity[d]
+
+    def append_today_activity(self,d, activity_name, time):
+        today_act = self.today_activity[d]
         length = len(today_act)
         today_act[length+1] = {attributes['an']:activity_name,attributes['st']:time}
 
-    def update_today_activity(self, date, num,activity_name, time ):
-        today_act = self.today_activity[date]
+    def update_today_activity(self, d, num,activity_name, time ):
+        today_act = self.today_activity[d]
         today_act[num] = {attributes['an']:activity_name,attributes['st']:time}
 
-    def get_summary(self, date):
-        return self.summary[date]
+    def del_today_activity(self,d, num):
+        activity_date = self.targets[d]
+        length = len(activity_date)
+        if num == length:
+            del activity_date[num]
+        else:
+            for i in range(num, length):
+                activity_date[i] = activity_date[i + 1]
+            del activity_date[length]
 
-    def append_summary(self,date, productive_rate, exercise_goal, time_on_game, time_on_sm,weight):
-        self.summary[date] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
+    def get_summary(self, d):
+        return self.summary[d]
+
+    def append_summary(self,d, productive_rate, exercise_goal, time_on_game, time_on_sm,weight):
+        self.summary[d] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
                               attributes['tg']: time_on_game, attributes['ts']: time_on_sm, attributes['w']:weight}
 
-    def update_summary(self,date, productive_rate, exercise_goal, time_on_game, time_on_sm,weight):
-        self.summary[date] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
+    def update_summary(self,d, productive_rate, exercise_goal, time_on_game, time_on_sm,weight):
+        self.summary[d] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
                               attributes['tg']: time_on_game, attributes['ts']: time_on_sm, attributes['w']:weight}
 
-    def get_weekly_summary(self, date):
-        return self.summary[date]
+    def get_weekly_summary(self, d):
+        return self.summary[d]
 
-    def append_weekly_summary(self, date, productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
-        self.weekly_summary[date] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
+    def append_weekly_summary(self, d, productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
+        self.weekly_summary[d] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
                               attributes['tg']: time_on_game, attributes['ts']: time_on_sm, attributes['w']:weight}
 
-    def update_weekly_summary(self, date, productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
-        self.weekly_summary[date] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
+    def update_weekly_summary(self, d, productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
+        self.weekly_summary[d] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
                               attributes['tg']: time_on_game, attributes['ts']: time_on_sm, attributes['w']:weight}
 
 
