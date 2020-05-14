@@ -57,44 +57,44 @@ class Journal:
     def append_target_on_date(self, date, target_name, des):
         target_date = self.targets[date]
         length = len(target_date)
-        target_date[length+1] = {"target_name":target_name,"Description":des}
+        target_date[length+1] = {"target_name":target_name,"description":des}
 
     def update_target_on_date(self,date, num, target_name, des):
         target_date = self.targets[date]
-        target_date[num] = {"target_name": target_name, "Description": des}
+        target_date[num] = {"target_name": target_name, "description": des}
 
     def get_today_activity(self,date):
         return self.today_activity[date]
 
-    def append_today_activity(self,date, activity_name, des):
+    def append_today_activity(self,date, activity_name, time):
         today_act = self.today_activity[date]
         length = len(today_act)
-        today_act[length+1] = {"activity_name": activity_name, "description": des}
+        today_act[length+1] = {"activity_name": activity_name, "start_time": time}
 
-    def update_today_activity(self, date, num,activity_name, des ):
+    def update_today_activity(self, date, num,activity_name, time ):
         today_act = self.today_activity[date]
-        today_act[num] = {"activity_name": activity_name, "description": des}
+        today_act[num] = {"activity_name": activity_name, "start_time": time }
 
     def get_summary(self, date):
         return self.summary[date]
 
-    def append_summary(self,date, learning_rate, excercise_goal, time_on_game, time_on_sm,weight):
-        self.summary[date] = {"learning_rate": learning_rate, "excercise_goal": excercise_goal,
+    def append_summary(self,date, learning_rate, exercise_goal, time_on_game, time_on_sm,weight):
+        self.summary[date] = {"productive_rate": learning_rate, "exercise_goal": exercise_goal,
                               "time_on_game": time_on_game, "time_on_sm": time_on_sm, "weight":weight}
 
-    def update_summary(self,date, learning_rate, excercise_goal, time_on_game, time_on_sm,weight):
-        self.summary[date] = {"learning_rate": learning_rate, "excercise_goal": excercise_goal,
+    def update_summary(self,date, learning_rate, exercise_goal, time_on_game, time_on_sm,weight):
+        self.summary[date] = {"productive_rate": learning_rate, "exercise_goal": exercise_goal,
                               "time_on_game": time_on_game, "time_on_sm": time_on_sm, "weight":weight}
 
     def get_weekly_summary(self, date):
         return self.summary[date]
 
-    def append_weekly_summary(self, date, learning_rate, excercise_goal, time_on_game, time_on_sm, weight):
-        self.weekly_summary[date] = {"learning_rate": learning_rate, "excercise_goal": excercise_goal,
+    def append_weekly_summary(self, date, learning_rate, exercise_goal, time_on_game, time_on_sm, weight):
+        self.weekly_summary[date] = {"productive_rate": learning_rate, "exercise_goal": exercise_goal,
                               "time_on_game": time_on_game, "time_on_sm": time_on_sm, "weight": weight}
 
-    def update_weekly_summary(self, date, learning_rate, excercise_goal, time_on_game, time_on_sm, weight):
-        self.weekly_summary[date] = {"learning_rate": learning_rate, "excercise_goal": excercise_goal,
+    def update_weekly_summary(self, date, learning_rate, exercise_goal, time_on_game, time_on_sm, weight):
+        self.weekly_summary[date] = {"productive_rate": learning_rate, "exercise_goal": exercise_goal,
                               "time_on_game": time_on_game, "time_on_sm": time_on_sm, "weight": weight}
 
 
@@ -105,3 +105,53 @@ class Journal:
         json.dump(self.today_activity, open(today_activity_path, 'w'))
         json.dump(self.summary, open(summary_path, 'w'))
         json.dump(self.weekly_summary, open(weekly_summary_path, 'w'))
+
+    def display_today(self):
+        '''
+        printing all current today related stuff
+
+        :param long_term: set
+        :param targets: set
+        :param today_activity: set
+        :return: none
+        '''
+        key= date.today()
+
+        print("Long Term Targets: ")
+        if self.long_term_target == {}: print("None")
+        else:
+            for i in self.long_term_target:
+                print(str(i) + ". " + str(self.long_term_target[i]['activity_name']) + "   "+
+                      str(self.long_term_target[i]['description']))
+
+        print("\n")
+        print("Today's target: ")
+        if key in self.targets:
+            today_target = self.targets[key]
+            if today_target == {}:print("None")
+            else:
+                for num_target in today_target:
+                    print(str(num_target) + ". " + str(today_target[num_target]["target_name"])+ "  "+
+                          str(today_target[num_target]['description']))
+        else:
+            print("None")
+
+        print("\n")
+        print("Today's activity: ")
+        if key in self.today_activity:
+            today_activity = self.today_activity[key]
+            if today_activity == {}:print("None")
+            else:
+                for num_activity in today_activity:
+                    print(str(num_activity) + ". " + str(today_activity[num_activity]["activity_name"]) + "  " +
+                          str(today_activity[num_activity]['start_time']))
+        else:
+            print("None")
+
+        #todo: This is not done yet
+        if self.today_activity[key][len(self.today_activity[key])]["activity_name"] == "Done":
+            print("Summary: ")
+            if self.summary[key]:
+                print("\n")
+                print("Summary of the day: ")
+                print("Productive rate: ", self.summary[key])
