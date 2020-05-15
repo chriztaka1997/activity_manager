@@ -63,7 +63,7 @@ class Journal:
             del self.long_term_target[length]
 
 
-    def get_target(self,d):
+    def get_target_on_date(self,d):
         return self.targets[d]
 
     def append_target_on_date(self, d, target_name, des):
