@@ -6,6 +6,7 @@ import time
 from journal import Journal
 
 DATE_FORMAT = "%Y-%m-%d"
+TIME_FORMAT = "%H:%M"
 
 
 def add_input(journal):
@@ -25,12 +26,18 @@ def add_input(journal):
         activity_name = input("What is the activity name: ")
         journal.append_today_activity(today_date, activity_name, start_time)
         print("Activity is added\n")
+        journal.display_activity(today_date.strftime(DATE_FORMAT))
+        print()
+
     elif(option == 2):
         print("Adding a long term target")
         activity_name = input("What is the activity name: ")
         activity_des = input("What is the description to this activity: ")
         journal.append_long_term(activity_name,activity_des)
         print("Long term target is added\n")
+        journal.display_long_term()
+        print()
+
     elif(option == 3):
         print("Which day do you want to add the target: ")
         print("1. today")
@@ -43,6 +50,9 @@ def add_input(journal):
             activity_name = input("What is the activity name: ")
             activity_des = input("What is the description to this activity: ")
             journal.append_target_on_date(today_date, activity_name,activity_des)
+            print("Target is added\n")
+            journal.display_target(today_date.strftime(DATE_FORMAT))
+            print()
 
         elif(respond ==2):
             print("Adding a target for today")
@@ -50,11 +60,13 @@ def add_input(journal):
             activity_name = input("What is the activity name: ")
             activity_des = input("What is the description to this activity: ")
             journal.append_target_on_date(today_date, activity_name, activity_des)
-        print("Target is added\n")
+            print("Target is added\n")
+            journal.display_target(today_date)
+            print()
 
     elif(option == 4):
         time_now = dt.today()
-        today_8pm  = time_now.replace(hour= 19, minute=0, second=0)
+        today_8pm  = time_now.replace(hour= 20, minute=0, second=0)
         if(time_now> today_8pm):print("The time is not appropriate to make a summary.")
         else:
             print("Adding summary")
@@ -65,14 +77,31 @@ def add_input(journal):
             weight = input("What is the current weight today: ")
             journal.append_summary(time_now.date(), productive_rate, exercise_goal,time_on_game,time_on_sm,weight)
             print("Summary is added\n")
+            journal.display_summary(time_now.strftime(DATE_FORMAT))
+            print()
 
 
 
 
 def update_input(journal):
+    print("\n")
+    print("What to add: ")
+    print("1. An activity")
+    print("2. Long term target")
+    print("3. Target for a specific date")
+    print("4. A summary")
+    option = input("Which option: ")
     print()
 
+
 def delete_input(journal):
+    print("\n")
+    print("What to add: ")
+    print("1. An activity")
+    print("2. Long term target")
+    print("3. Target for a specific date")
+    print("4. A summary")
+    option = input("Which option: ")
     print()
 
 def user_input(journal):

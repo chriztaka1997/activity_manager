@@ -200,10 +200,10 @@ class Journal:
                 print(str(i) + ". " + str(self.long_term_target[i][attributes['an']]) + "   " +
                       str(self.long_term_target[i][attributes['des']]))
 
-    def display_target(self,date):
-        key = dt.strptime(date,"%Y-%m-%d")
+    def display_target(self,d):
+        key = dt.strptime(d,"%Y-%m-%d").date()
         print("\n")
-        print("Today's activity: ")
+        print("Today's activity"+d+": ")
         if key in self.today_activity:
             today_activity = self.today_activity[key]
             if today_activity == {}:
@@ -215,10 +215,10 @@ class Journal:
         else:
             print("None")
 
-    def display_activity(self,date):
-        key = dt.strptime(date,"%Y-%m-%d")
+    def display_activity(self,d):
+        key = dt.strptime(d,"%Y-%m-%d").date()
         print("\n")
-        print("Today's activity: ")
+        print("Today's activity"+d+": ")
         if key in self.today_activity:
             today_activity = self.today_activity[key]
             if today_activity == {}:
@@ -230,10 +230,10 @@ class Journal:
         else:
             print("None")
 
-    def display_summary(self,date):
-        key = dt.strptime(date,"%Y-%m-%d")
+    def display_summary(self,d):
+        key = dt.strptime(d,"%Y-%m-%d").date()
         print("\n")
-        print("Summary of the day: ")
+        print("Summary of the"+d+": ")
         if key in self.summary:
             print("None")
         else:
@@ -243,8 +243,10 @@ class Journal:
             print("Time on Social Media: ", self.summary[key][attributes['ts']])
             print("Weight today: ", self.summary[key][attributes['w']])
 
-    def display_weekly_summary(self,date):
-        key = dt.strptime(date, "%Y-%m-%d")
+    def display_weekly_summary(self,d):
+        key = dt.strptime(d, "%Y-%m-%d").date()
+        print("\n")
+        print("Weekly summary of "+d+": ")
         for week in self.weekly_summary:
             if self.weekly_summary[week][attributes['sd']] < key < self.weekly_summary[week][attributes['ed']]:
                 print("Productive rate: ", self.summary[week][attributes['pr']])
