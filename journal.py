@@ -13,7 +13,7 @@ summary_path = "./Database/summary.json"
 weekly_summary_path = "./Database/weekly_summary.json"
 
 attributes = {'an' :"activity_name", 'des': 'description','st':'start_time','pr':'productive_rate','eg':'exercise_goal',
-              'tg':'time_on_game','ts':'time_on_ssn','w':'weight'}
+              'tg':'time_on_game','ts':'time_on_ssn','w':'weight','sd':"start_date",'ed':"end_date"}
 
 class Journal:
 
@@ -122,12 +122,12 @@ class Journal:
     def get_weekly_summary(self, d):
         return self.summary[d]
 
-    def append_weekly_summary(self, d, productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
-        self.weekly_summary[d] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
+    def append_weekly_summary(self, d, star_date, end_date,productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
+        self.weekly_summary[d] = {attributes['st']:star_date,attributes['ed']:end_date,attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
                               attributes['tg']: time_on_game, attributes['ts']: time_on_sm, attributes['w']:weight}
 
-    def update_weekly_summary(self, d, productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
-        self.weekly_summary[d] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
+    def update_weekly_summary(self, d, star_date, end_date, productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
+        self.weekly_summary[d] = {attributes['st']:star_date,attributes['ed']:end_date,attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
                               attributes['tg']: time_on_game, attributes['ts']: time_on_sm, attributes['w']:weight}
 
 
@@ -190,3 +190,69 @@ class Journal:
             print("Time on game: ", self.summary[key][attributes['tg']])
             print("Time on Social Media: ", self.summary[key][attributes['ts']])
             print("Weight today: ", self.summary[key][attributes['w']])
+
+    def display_long_term(self):
+        print("Long Term Targets: ")
+        if self.long_term_target == {}:
+            print("None")
+        else:
+            for i in self.long_term_target:
+                print(str(i) + ". " + str(self.long_term_target[i][attributes['an']]) + "   " +
+                      str(self.long_term_target[i][attributes['des']]))
+
+    def display_target(self,date):
+        key = dt.strptime(date,"%Y-%m-%d")
+        print("\n")
+        print("Today's activity: ")
+        if key in self.today_activity:
+            today_activity = self.today_activity[key]
+            if today_activity == {}:
+                print("None")
+            else:
+                for num_activity in today_activity:
+                    print(str(num_activity) + ". " + str(today_activity[num_activity][attributes['an']]) + "  " +
+                          str(today_activity[num_activity][attributes['st']]))
+        else:
+            print("None")
+
+    def display_activity(self,date):
+        key = dt.strptime(date,"%Y-%m-%d")
+        print("\n")
+        print("Today's activity: ")
+        if key in self.today_activity:
+            today_activity = self.today_activity[key]
+            if today_activity == {}:
+                print("None")
+            else:
+                for num_activity in today_activity:
+                    print(str(num_activity) + ". " + str(today_activity[num_activity][attributes['an']]) + "  " +
+                          str(today_activity[num_activity][attributes['st']]))
+        else:
+            print("None")
+
+    def display_summary(self,date):
+        key = dt.strptime(date,"%Y-%m-%d")
+        print("\n")
+        print("Summary of the day: ")
+        if key in self.summary:
+            print("None")
+        else:
+            print("Productive rate: ", self.summary[key][attributes['pr']])
+            print("Excercise goal: ", self.summary[key][attributes['eg']])
+            print("Time on game: ", self.summary[key][attributes['tg']])
+            print("Time on Social Media: ", self.summary[key][attributes['ts']])
+            print("Weight today: ", self.summary[key][attributes['w']])
+
+    def display_weekly_summary(self,date):
+        key = dt.strptime(date, "%Y-%m-%d")
+        for week in self.weekly_summary:
+            if self.weekly_summary[week][attributes['sd']] < key < self.weekly_summary[week][attributes['ed']]:
+                print("Productive rate: ", self.summary[week][attributes['pr']])
+                print("Excercise goal: ", self.summary[week][attributes['eg']])
+                print("Time on game: ", self.summary[week][attributes['tg']])
+                print("Time on Social Media: ", self.summary[week][attributes['ts']])
+                print("Weight today: ", self.summary[week][attributes['w']])
+                return
+        print("None")
+
+
