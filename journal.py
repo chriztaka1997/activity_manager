@@ -12,8 +12,7 @@ today_activity_path = "./Database/today_activity.json"
 summary_path = "./Database/summary.json"
 weekly_summary_path = "./Database/weekly_summary.json"
 
-attributes = {'an' :"activity_name", 'des': 'description','st':'start_time','pr':'productive_rate','eg':'exercise_goal',
-              'tg':'time_on_game','ts':'time_on_ssn','w':'weight','sd':"start_date",'ed':"end_date"}
+
 
 class Journal:
 
@@ -34,6 +33,10 @@ class Journal:
         if (path.exists(weekly_summary_path)): self.weekly_summary = json.load(open(weekly_summary_path, "r"))
         else: self.weekly_summary = {}
 
+        self.attributes = {'an': "activity_name", 'des': 'description', 'st': 'start_time', 'pr': 'productive_rate',
+                      'eg': 'exercise_goal',
+                      'tg': 'time_on_game', 'ts': 'time_on_ssn', 'w': 'weight', 'sd': "start_date", 'ed': "end_date"}
+
     def get_long_term(self):
         '''
         Get the information in the long term project
@@ -49,10 +52,10 @@ class Journal:
         :return: none
         '''
         length = len(self.long_term_target)
-        self.long_term_target[length+1] = {attributes['an']:activity,attributes['des']:des}
+        self.long_term_target[length+1] = {self.attributes['an']:activity,self.attributes['des']:des}
 
     def update_long_term(self,num,activity, des):
-        self.long_term_target[num]= {attributes['an']:activity,attributes['des']:des}
+        self.long_term_target[num]= {self.attributes['an']:activity,self.attributes['des']:des}
 
     def del_long_term(self, num):
         length = len(self.long_term_target)
@@ -69,11 +72,11 @@ class Journal:
     def append_target_on_date(self, d, target_name, des):
         target_date = self.targets[d]
         length = len(target_date)
-        target_date[length+1] = {attributes['an']:target_name,attributes['des']:des}
+        target_date[length+1] = {self.attributes['an']:target_name,self.attributes['des']:des}
 
     def update_target_on_date(self,d, num, target_name, des):
         target_date = self.targets[d]
-        target_date[num] = {attributes['an']:target_name,attributes['des']:des}
+        target_date[num] = {self.attributes['an']:target_name,self.attributes['des']:des}
 
     def del_target_on_date(self,d,num):
         target_date = self.targets[d]
@@ -92,11 +95,11 @@ class Journal:
     def append_today_activity(self,d, activity_name, time):
         today_act = self.today_activity[d]
         length = len(today_act)
-        today_act[length+1] = {attributes['an']:activity_name,attributes['st']:time}
+        today_act[length+1] = {self.attributes['an']:activity_name,self.attributes['st']:time}
 
     def update_today_activity(self, d, num,activity_name, time ):
         today_act = self.today_activity[d]
-        today_act[num] = {attributes['an']:activity_name,attributes['st']:time}
+        today_act[num] = {self.attributes['an']:activity_name,self.attributes['st']:time}
 
     def del_today_activity(self,d, num):
         activity_date = self.targets[d]
@@ -112,23 +115,26 @@ class Journal:
         return self.summary[d]
 
     def append_summary(self,d, productive_rate, exercise_goal, time_on_game, time_on_sm,weight):
-        self.summary[d] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
-                              attributes['tg']: time_on_game, attributes['ts']: time_on_sm, attributes['w']:weight}
+        self.summary[d] = {self.attributes['pr']: productive_rate, self.attributes['eg']: exercise_goal,
+                              self.attributes['tg']: time_on_game, self.attributes['ts']: time_on_sm,
+                           self.attributes['w']:weight}
 
     def update_summary(self,d, productive_rate, exercise_goal, time_on_game, time_on_sm,weight):
-        self.summary[d] = {attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
-                              attributes['tg']: time_on_game, attributes['ts']: time_on_sm, attributes['w']:weight}
+        self.summary[d] = {self.attributes['pr']: productive_rate, self.attributes['eg']: exercise_goal,
+                              self.attributes['tg']: time_on_game, self.attributes['ts']: time_on_sm, self.attributes['w']:weight}
 
     def get_weekly_summary(self, d):
         return self.summary[d]
 
     def append_weekly_summary(self, d, star_date, end_date,productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
-        self.weekly_summary[d] = {attributes['st']:star_date,attributes['ed']:end_date,attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
-                              attributes['tg']: time_on_game, attributes['ts']: time_on_sm, attributes['w']:weight}
+        self.weekly_summary[d] = {self.attributes['st']:star_date,self.attributes['ed']:end_date,self.attributes['pr']: productive_rate,
+                                  self.attributes['eg']: exercise_goal,
+                              self.attributes['tg']: time_on_game, self.attributes['ts']: time_on_sm, self.attributes['w']:weight}
 
     def update_weekly_summary(self, d, star_date, end_date, productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
-        self.weekly_summary[d] = {attributes['st']:star_date,attributes['ed']:end_date,attributes['pr']: productive_rate, attributes['eg']: exercise_goal,
-                              attributes['tg']: time_on_game, attributes['ts']: time_on_sm, attributes['w']:weight}
+        self.weekly_summary[d] = {self.attributes['st']:star_date,self.attributes['ed']:end_date,self.attributes['pr']: productive_rate,
+                                  self.attributes['eg']: exercise_goal,
+                              self.attributes['tg']: time_on_game, self.attributes['ts']: time_on_sm, self.attributes['w']:weight}
 
 
     def store_data(self):
@@ -154,8 +160,8 @@ class Journal:
         if self.long_term_target == {}: print("None")
         else:
             for i in self.long_term_target:
-                print(str(i) + ". " + str(self.long_term_target[i][attributes['an']]) + "   "+
-                      str(self.long_term_target[i][attributes['des']]))
+                print(str(i) + ". " + str(self.long_term_target[i][self.attributes['an']]) + "   "+
+                      str(self.long_term_target[i][self.attributes['des']]))
 
         print("\n")
         print("Today's target: ")
@@ -164,8 +170,8 @@ class Journal:
             if today_target == {}:print("None")
             else:
                 for num_target in today_target:
-                    print(str(num_target) + ". " + str(today_target[num_target][attributes['an']])+ "  "+
-                          str(today_target[num_target][attributes['des']]))
+                    print(str(num_target) + ". " + str(today_target[num_target][self.attributes['an']])+ "  "+
+                          str(today_target[num_target][self.attributes['des']]))
         else:
             print("None")
 
@@ -176,8 +182,8 @@ class Journal:
             if today_activity == {}:print("None")
             else:
                 for num_activity in today_activity:
-                    print(str(num_activity) + ". " + str(today_activity[num_activity][attributes['an']]) + "  " +
-                          str(today_activity[num_activity][attributes['st']]))
+                    print(str(num_activity) + ". " + str(today_activity[num_activity][self.attributes['an']]) + "  " +
+                          str(today_activity[num_activity][self.attributes['st']]))
         else:
             print("None")
 
@@ -185,11 +191,11 @@ class Journal:
         print("Summary of the day: ")
         if self.summary[key] == {}: print("None")
         else:
-            print("Productive rate: ", self.summary[key][attributes['pr']])
-            print("Excercise goal: ", self.summary[key][attributes['eg']])
-            print("Time on game: ", self.summary[key][attributes['tg']])
-            print("Time on Social Media: ", self.summary[key][attributes['ts']])
-            print("Weight today: ", self.summary[key][attributes['w']])
+            print("Productive rate: ", self.summary[key][self.attributes['pr']])
+            print("Excercise goal: ", self.summary[key][self.attributes['eg']])
+            print("Time on game: ", self.summary[key][self.attributes['tg']])
+            print("Time on Social Media: ", self.summary[key][self.attributes['ts']])
+            print("Weight today: ", self.summary[key][self.attributes['w']])
 
     def display_long_term(self):
         print("Long Term Targets: ")
@@ -197,63 +203,59 @@ class Journal:
             print("None")
         else:
             for i in self.long_term_target:
-                print(str(i) + ". " + str(self.long_term_target[i][attributes['an']]) + "   " +
-                      str(self.long_term_target[i][attributes['des']]))
+                print(str(i) + ". " + str(self.long_term_target[i][self.attributes['an']]) + "   " +
+                      str(self.long_term_target[i][self.attributes['des']]))
 
-    def display_target(self,d):
-        key = dt.strptime(d,"%Y-%m-%d").date()
+    def display_target(self,key):
         print("\n")
-        print("Today's activity"+d+": ")
+        print("Today's activity"+key+": ")
         if key in self.today_activity:
             today_activity = self.today_activity[key]
             if today_activity == {}:
                 print("None")
             else:
                 for num_activity in today_activity:
-                    print(str(num_activity) + ". " + str(today_activity[num_activity][attributes['an']]) + "  " +
-                          str(today_activity[num_activity][attributes['st']]))
+                    print(str(num_activity) + ". " + str(today_activity[num_activity][self.attributes['an']]) + "  " +
+                          str(today_activity[num_activity][self.attributes['st']]))
         else:
             print("None")
 
-    def display_activity(self,d):
-        key = dt.strptime(d,"%Y-%m-%d").date()
+    def display_activity(self,key):
         print("\n")
-        print("Today's activity"+d+": ")
+        print("Today's activity"+key+": ")
         if key in self.today_activity:
             today_activity = self.today_activity[key]
             if today_activity == {}:
                 print("None")
             else:
                 for num_activity in today_activity:
-                    print(str(num_activity) + ". " + str(today_activity[num_activity][attributes['an']]) + "  " +
-                          str(today_activity[num_activity][attributes['st']]))
+                    print(str(num_activity) + ". " + str(today_activity[num_activity][self.attributes['an']]) + "  " +
+                          str(today_activity[num_activity][self.attributes['st']]))
         else:
             print("None")
 
-    def display_summary(self,d):
-        key = dt.strptime(d,"%Y-%m-%d").date()
+    def display_summary(self,key):
         print("\n")
-        print("Summary of the"+d+": ")
+        print("Summary of the"+key+": ")
         if key in self.summary:
             print("None")
         else:
-            print("Productive rate: ", self.summary[key][attributes['pr']])
-            print("Excercise goal: ", self.summary[key][attributes['eg']])
-            print("Time on game: ", self.summary[key][attributes['tg']])
-            print("Time on Social Media: ", self.summary[key][attributes['ts']])
-            print("Weight today: ", self.summary[key][attributes['w']])
+            print("Productive rate: ", self.summary[key][self.attributes['pr']])
+            print("Excercise goal: ", self.summary[key][self.attributes['eg']])
+            print("Time on game: ", self.summary[key][self.attributes['tg']])
+            print("Time on Social Media: ", self.summary[key][self.attributes['ts']])
+            print("Weight today: ", self.summary[key][self.attributes['w']])
 
-    def display_weekly_summary(self,d):
-        key = dt.strptime(d, "%Y-%m-%d").date()
+    def display_weekly_summary(self,key):
         print("\n")
-        print("Weekly summary of "+d+": ")
+        print("Weekly summary of "+key+": ")
         for week in self.weekly_summary:
-            if self.weekly_summary[week][attributes['sd']] < key < self.weekly_summary[week][attributes['ed']]:
-                print("Productive rate: ", self.summary[week][attributes['pr']])
-                print("Excercise goal: ", self.summary[week][attributes['eg']])
-                print("Time on game: ", self.summary[week][attributes['tg']])
-                print("Time on Social Media: ", self.summary[week][attributes['ts']])
-                print("Weight today: ", self.summary[week][attributes['w']])
+            if self.weekly_summary[week][self.attributes['sd']] < key < self.weekly_summary[week][self.attributes['ed']]:
+                print("Productive rate: ", self.summary[week][self.attributes['pr']])
+                print("Excercise goal: ", self.summary[week][self.attributes['eg']])
+                print("Time on game: ", self.summary[week][self.attributes['tg']])
+                print("Time on Social Media: ", self.summary[week][self.attributes['ts']])
+                print("Weight today: ", self.summary[week][self.attributes['w']])
                 return
         print("None")
 

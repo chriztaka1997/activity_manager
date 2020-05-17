@@ -26,7 +26,7 @@ def add_input(journal):
         activity_name = input("What is the activity name: ")
         journal.append_today_activity(today_date, activity_name, start_time)
         print("Activity is added\n")
-        journal.display_activity(today_date.strftime(DATE_FORMAT))
+        journal.display_activity(today_date)
         print()
 
     elif(option == 2):
@@ -51,7 +51,7 @@ def add_input(journal):
             activity_des = input("What is the description to this activity: ")
             journal.append_target_on_date(today_date, activity_name,activity_des)
             print("Target is added\n")
-            journal.display_target(today_date.strftime(DATE_FORMAT))
+            journal.display_target(today_date)
             print()
 
         elif(respond ==2):
@@ -61,7 +61,7 @@ def add_input(journal):
             activity_des = input("What is the description to this activity: ")
             journal.append_target_on_date(today_date, activity_name, activity_des)
             print("Target is added\n")
-            journal.display_target(today_date)
+            journal.display_target(dt.strptime(today_date,DATE_FORMAT).date())
             print()
 
     elif(option == 4):
@@ -77,7 +77,7 @@ def add_input(journal):
             weight = input("What is the current weight today: ")
             journal.append_summary(time_now.date(), productive_rate, exercise_goal,time_on_game,time_on_sm,weight)
             print("Summary is added\n")
-            journal.display_summary(time_now.strftime(DATE_FORMAT))
+            journal.display_summary(time_now.date())
             print()
 
 
@@ -92,6 +92,25 @@ def update_input(journal):
     print("4. A summary")
     option = input("Which option: ")
     print()
+    if (option ==1):
+        #updating an activity
+        print("updating an activity for today")
+        today_date = date.today()
+        journal.display_activity(today_date.strftime(DATE_FORMAT))
+        respond = input("Which activity you want to update: ")
+        activity = journal.get_today_activity(today_date)[respond]
+
+        print("Current start time: ",activity[journal.attributes['st']])
+        start_time = input("What is the updated start time: ")
+
+        print("Current activity name time: ", activity[journal.attributes['an']])
+        activity_name = input("What is the updated activity name: ")
+        journal.update_today_activity(today_date,respond, activity_name,start_time)
+
+        print("Activity is updated\n")
+        journal.display_activity(today_date.strftime(DATE_FORMAT))
+        print()
+    #TODO: option 2 3 and 4
 
 
 def delete_input(journal):
