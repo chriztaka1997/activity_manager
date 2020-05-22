@@ -251,11 +251,11 @@ class Journal:
         print("Weekly summary of "+key+": ")
         for week in self.weekly_summary:
             if self.weekly_summary[week][self.attributes['sd']] < key < self.weekly_summary[week][self.attributes['ed']]:
-                print("Productive rate: ", self.summary[week][self.attributes['pr']])
-                print("Excercise goal: ", self.summary[week][self.attributes['eg']])
-                print("Time on game: ", self.summary[week][self.attributes['tg']])
-                print("Time on Social Media: ", self.summary[week][self.attributes['ts']])
-                print("Weight today: ", self.summary[week][self.attributes['w']])
+                print("Productive rate: ", self.weekly_summary[week][self.attributes['pr']])
+                print("Excercise goal: ", self.weekly_summary[week][self.attributes['eg']])
+                print("Time on game: ", self.weekly_summary[week][self.attributes['tg']])
+                print("Time on Social Media: ", self.weekly_summary[week][self.attributes['ts']])
+                print("Weight today: ", self.weekly_summary[week][self.attributes['w']])
                 return
         print("None")
 
