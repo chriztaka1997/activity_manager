@@ -70,8 +70,13 @@ class Journal:
         return self.targets[d]
 
     def append_target_on_date(self, d, target_name, des):
-        target_date = self.targets[d]
-        length = len(target_date)
+        try:
+            target_date = self.targets[d]
+            length = len(target_date)
+        except KeyError:
+            self.targets[d] = {}
+            target_date = self.targets[d]
+            length = 0
         target_date[length+1] = {self.attributes['an']:target_name,self.attributes['des']:des}
 
     def update_target_on_date(self,d, num, target_name, des):
@@ -93,8 +98,14 @@ class Journal:
         return self.today_activity[d]
 
     def append_today_activity(self,d, activity_name, time):
-        today_act = self.today_activity[d]
-        length = len(today_act)
+        try:
+            today_act = self.today_activity[d]
+            length = len(today_act)
+        except KeyError:
+            self.today_activity[d] = {}
+            today_act = self.today_activity[d]
+            length = 0
+
         today_act[length+1] = {self.attributes['an']:activity_name,self.attributes['st']:time}
 
     def update_today_activity(self, d, num,activity_name, time ):
@@ -154,7 +165,7 @@ class Journal:
         :param today_activity: set
         :return: none
         '''
-        key= date.today()
+        key= date.today().strftime(DATE_FORMAT)
 
         print("Long Term Targets: ")
         if self.long_term_target == {}: print("None")
@@ -189,7 +200,13 @@ class Journal:
 
         print("\n")
         print("Summary of the day: ")
-        if self.summary[key] == {}: print("None")
+        try:
+            check = (self.summary[key] == {})
+        except KeyError:
+            check = True
+
+        if check:
+            print("None")
         else:
             print("Productive rate: ", self.summary[key][self.attributes['pr']])
             print("Excercise goal: ", self.summary[key][self.attributes['eg']])
@@ -208,7 +225,7 @@ class Journal:
 
     def display_target(self,key):
         print("\n")
-        print("Today's activity"+key+": ")
+        print(key+" target : ")
         if key in self.today_activity:
             today_activity = self.today_activity[key]
             if today_activity == {}:
@@ -222,7 +239,7 @@ class Journal:
 
     def display_activity(self,key):
         print("\n")
-        print("Today's activity"+key+": ")
+        print(key+" activity: ")
         if key in self.today_activity:
             today_activity = self.today_activity[key]
             if today_activity == {}:
@@ -236,7 +253,7 @@ class Journal:
 
     def display_summary(self,key):
         print("\n")
-        print("Summary of the"+key+": ")
+        print("Summary of the "+key+": ")
         if key in self.summary:
             print("None")
         else:
@@ -258,5 +275,16 @@ class Journal:
                 print("Weight today: ", self.weekly_summary[week][self.attributes['w']])
                 return
         print("None")
+
+    def generate_weekly_summary(self):
+        print("Generating weekly summary")
+
+    def end(self):
+        json.dump(self.long_term_target, open(long_term_path,"w"))
+        json.dump(self.targets, open(targets_path,"w"))
+        json.dump(self.today_activity, open(today_activity_path,'w'))
+        json.dump(self.summary, open(summary_path,'w'))
+        json.dump(self.weekly_summary, open(weekly_summary_path,'w'))
+        print("Data is stored")
 
 

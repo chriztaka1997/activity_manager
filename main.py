@@ -17,7 +17,7 @@ def add_input(journal):
     print("3. Target for a specific date")
     print("4. A summary")
     print("5. Back")
-    option = input("Which option: ")
+    option = int(input("Which option: "))
     print()
     #assumming that the user input is never wrong
     if(option ==1):
@@ -220,12 +220,12 @@ def user_input(journal):
     print("4. Show today detail")
     print("5. quit")
     #assumming that the user input is never wrong
-    option = input("which option: ")
+    option = int(input("which option: "))
     if(option == 1): add_input(journal)
     elif (option == 2): update_input(journal)
     elif (option == 3): delete_input(journal)
     elif(option == 4): journal.display_today()
-    else: return False
+    elif (option == 5): return False
     return True
 
 
@@ -246,3 +246,7 @@ def main():
     loop = True
     while loop:
         loop = user_input(journal)
+
+    journal.end()
+
+main()
