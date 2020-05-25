@@ -142,7 +142,7 @@ def update_input(journal):
         des = input("What is the description to the new activity: ")
         journal.update_target_on_date(d,respond,activity,des)
         print()
-
+        #TODO: need to be fix, adding another target
         print("Target is updated.\n")
         journal.display_target(d)
         print()
