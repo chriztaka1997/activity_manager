@@ -66,9 +66,10 @@ def add_input(journal):
             print()
 
     elif(option == 4):
-        time_now = dt.today()
-        today_8pm  = time_now.replace(hour= 20, minute=0, second=0)
-        if(time_now> today_8pm):print("The time is not appropriate to make a summary.")
+        time_now = dt.now()
+        today_8pm = time_now.replace(hour=20, minute=0, second=0, microsecond=0)
+        print()
+        if time_now < today_8pm:print("The time is not appropriate to make a summary.")
         else:
             print("Adding summary")
             productive_rate = input("what is the productive rate today: ")
@@ -76,9 +77,9 @@ def add_input(journal):
             time_on_game = input("Time spent on game: ")
             time_on_sm = input("Time spend on social media: ")
             weight = input("What is the current weight today: ")
-            journal.append_summary(time_now.date(), productive_rate, exercise_goal,time_on_game,time_on_sm,weight)
+            journal.append_summary(time_now.date().strftime(DATE_FORMAT), productive_rate, exercise_goal,time_on_game,time_on_sm,weight)
             print("Summary is added\n")
-            journal.display_summary(time_now.date())
+            journal.display_summary(date.today().strftime(DATE_FORMAT))
             print()
         #TODO: Check to see if there there are already 7 summary, then make weekly summary
 
@@ -93,14 +94,14 @@ def update_input(journal):
     print("3. Target for a specific date")
     print("4. A summary")
     print("5. Back")
-    option = input("Which option: ")
+    option = int(input("Which option: "))
     print()
     if (option ==1):
         #updating an activity
         print("updating an activity for today.")
         today_date = date.today().strftime(DATE_FORMAT)
         journal.display_activity(today_date)
-        respond = int(input("Which activity you want to update: "))
+        respond = input("Which activity you want to update: ").strip()
         activity = journal.get_today_activity(today_date)[respond]
 
         print()
@@ -119,7 +120,7 @@ def update_input(journal):
     elif (option == 2):
         print("Updating a long term target.")
         journal.display_long_term()
-        respond = int(input("Which long term target you want to update: "))
+        respond = input("Which long term target you want to update: ")
         print()
         activity = input("What is the new activity: ")
         des = input("What is the description to the new activity: ")
@@ -134,7 +135,7 @@ def update_input(journal):
         print("Updating a target.")
         d = input("Which target date you want to change(yyyy-mm-dd): ")
         journal.display_target(d)
-        respond = int(input("Which target you want to update: "))
+        respond = input("Which target you want to update: ")
         print()
 
         activity = input("What is the new activity: ")
@@ -174,7 +175,7 @@ def delete_input(journal):
     print("2. Long term target")
     print("3. Target for a specific date")
     print("4. Back")
-    option = input("Which option: ")
+    option = int(input("Which option: "))
     print()
     if (option ==1):
         #updating an activity

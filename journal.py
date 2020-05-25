@@ -226,14 +226,14 @@ class Journal:
     def display_target(self,key):
         print("\n")
         print(key+" target : ")
-        if key in self.today_activity:
-            today_activity = self.today_activity[key]
-            if today_activity == {}:
+        if key in self.targets:
+            today_target = self.targets[key]
+            if today_target == {}:
                 print("None")
             else:
-                for num_activity in today_activity:
-                    print(str(num_activity) + ". " + str(today_activity[num_activity][self.attributes['an']]) + "  " +
-                          str(today_activity[num_activity][self.attributes['st']]))
+                for num_activity in today_target:
+                    print(str(num_activity) + ". " + str(today_target[num_activity][self.attributes['an']]) + "  " +
+                          str(today_target[num_activity][self.attributes['des']]))
         else:
             print("None")
 
@@ -254,7 +254,7 @@ class Journal:
     def display_summary(self,key):
         print("\n")
         print("Summary of the "+key+": ")
-        if key in self.summary:
+        if not(key in self.summary):
             print("None")
         else:
             print("Productive rate: ", self.summary[key][self.attributes['pr']])
