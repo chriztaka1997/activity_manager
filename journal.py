@@ -289,7 +289,7 @@ class Journal:
         avgGtime /= 7
         avgSmtime /= 7
         avgW /= 7
-        # self.append_weekly_summary(self, d, lastWeek, today, avgPr, eg, avgGtime, avgSmtime, avgW)
+        self.append_weekly_summary(self, today, lastWeek, today, avgPr, eg, avgGtime, avgSmtime, avgW)
         # ^not sure what to do with d and eg
         return
 
