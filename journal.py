@@ -1,6 +1,6 @@
 from os import path
 import json
-from datetime import date
+from datetime import date, timedelta
 from datetime import datetime as dt
 
 DATE_FORMAT = "%Y-%m-%d"
@@ -272,6 +272,28 @@ class Journal:
 
     def generate_weekly_summary(self):
         print("Generating weekly summary")
+        # Check to see if there there are already 7 summary?
+        today = date.today()
+        lastWeek = (today - timedelta(days=7)).strftime(DATE_FORMAT)
+        avgPr = 0.0
+        avgGtime = 0.0
+        avgSmtime = 0.0
+        avgW = 0.0
+        if len(self.summary) >= 7:
+            for entry in self.summary:
+                avgPr += self.summary[entry][self.attributes['pr']]
+                avgGtime += self.summary[entry][self.attributes['tg']]
+                avgSmtime += self.summary[entry][self.attributes['ts']]
+                avgW += self.summary[entry][self.attributes['w']]
+        avgPr /= 7
+        avgGtime /= 7
+        avgSmtime /= 7
+        avgW /= 7
+        # self.append_weekly_summary(self, d, lastWeek, today, avgPr, eg, avgGtime, avgSmtime, avgW)
+        # ^not sure what to do with d and eg
+        return
+
+
 
 
     def store_data(self):
