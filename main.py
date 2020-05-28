@@ -229,8 +229,10 @@ def user_input(journal):
         elif(option == 4): journal.display_today()
         elif (option == 5): return False
         return True
-    except:
-        user_input(journal)
+    except Exception as e:
+        print("There is something wrong")
+        print(str(e))
+        return user_input(journal)
 
 
 

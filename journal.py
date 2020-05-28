@@ -62,8 +62,8 @@ class Journal:
         if num == str(length): del self.long_term_target[num]
         else:
             for i in range(int(num), length):
-                self.long_term_target[str(i)] = self.long_term_target[i+1]
-            del self.long_term_target[length]
+                self.long_term_target[str(i)] = self.long_term_target[str(i+1)]
+            del self.long_term_target[str(length)]
 
 
     def get_target_on_date(self,d):
@@ -86,12 +86,12 @@ class Journal:
     def del_target_on_date(self,d,num):
         target_date = self.targets[d]
         length = len(target_date)
-        if num == length:
+        if int(num) == length:
             del target_date[num]
         else:
-            for i in range(num, length):
-                target_date[i] = target_date[i + 1]
-            del target_date[length]
+            for i in range(int(num), length):
+                target_date[str(i)] = target_date[str(i + 1)]
+            del target_date[str(length)]
 
 
     def get_today_activity(self,d):
@@ -115,12 +115,12 @@ class Journal:
     def del_today_activity(self,d, num):
         activity_date = self.today_activity[d]
         length = len(activity_date)
-        if num == length:
+        if int(num) == length:
             del activity_date[num]
         else:
-            for i in range(num, length):
-                activity_date[i] = activity_date[i + 1]
-            del activity_date[length]
+            for i in range(int(num), length):
+                activity_date[str(i)] = activity_date[str(i + 1)]
+            del activity_date[str(length)]
 
     def get_summary(self, d):
         return self.summary[d]
