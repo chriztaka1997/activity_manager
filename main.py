@@ -213,21 +213,24 @@ def delete_input(journal):
 
 
 def user_input(journal):
-    print("\n")
-    print("Option to choose from: ")
-    print("1. Add")
-    print("2. Update")
-    print("3. Delete")
-    print("4. Show today detail")
-    print("5. quit")
-    #assumming that the user input is never wrong
-    option = int(input("which option: "))
-    if(option == 1): add_input(journal)
-    elif (option == 2): update_input(journal)
-    elif (option == 3): delete_input(journal)
-    elif(option == 4): journal.display_today()
-    elif (option == 5): return False
-    return True
+    try:
+        print("\n")
+        print("Option to choose from: ")
+        print("1. Add")
+        print("2. Update")
+        print("3. Delete")
+        print("4. Show today detail")
+        print("5. quit")
+        #assumming that the user input is never wrong
+        option = int(input("which option: "))
+        if(option == 1): add_input(journal)
+        elif (option == 2): update_input(journal)
+        elif (option == 3): delete_input(journal)
+        elif(option == 4): journal.display_today()
+        elif (option == 5): return False
+        return True
+    except:
+        user_input(journal)
 
 
 

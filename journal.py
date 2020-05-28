@@ -52,17 +52,17 @@ class Journal:
         :return: none
         '''
         length = len(self.long_term_target)
-        self.long_term_target[length+1] = {self.attributes['an']:activity,self.attributes['des']:des}
+        self.long_term_target[str(length+1)] = {self.attributes['an']:activity,self.attributes['des']:des}
 
     def update_long_term(self,num,activity, des):
         self.long_term_target[num]= {self.attributes['an']:activity,self.attributes['des']:des}
 
     def del_long_term(self, num):
         length = len(self.long_term_target)
-        if num == length: del self.long_term_target[num]
+        if num == str(length): del self.long_term_target[num]
         else:
-            for i in range(num, length):
-                self.long_term_target[i] = self.long_term_target[i+1]
+            for i in range(int(num), length):
+                self.long_term_target[str(i)] = self.long_term_target[i+1]
             del self.long_term_target[length]
 
 
@@ -77,7 +77,7 @@ class Journal:
             self.targets[d] = {}
             target_date = self.targets[d]
             length = 0
-        target_date[length+1] = {self.attributes['an']:target_name,self.attributes['des']:des}
+        target_date[str(length+1)] = {self.attributes['an']:target_name,self.attributes['des']:des}
 
     def update_target_on_date(self,d, num, target_name, des):
         target_date = self.targets[d]
@@ -106,14 +106,14 @@ class Journal:
             today_act = self.today_activity[d]
             length = 0
 
-        today_act[length+1] = {self.attributes['an']:activity_name,self.attributes['st']:time}
+        today_act[str(length+1)] = {self.attributes['an']:activity_name,self.attributes['st']:time}
 
     def update_today_activity(self, d, num,activity_name, time ):
         today_act = self.today_activity[d]
         today_act[num] = {self.attributes['an']:activity_name,self.attributes['st']:time}
 
     def del_today_activity(self,d, num):
-        activity_date = self.targets[d]
+        activity_date = self.today_activity[d]
         length = len(activity_date)
         if num == length:
             del activity_date[num]
@@ -148,13 +148,7 @@ class Journal:
                               self.attributes['tg']: time_on_game, self.attributes['ts']: time_on_sm, self.attributes['w']:weight}
 
 
-    def store_data(self):
-        ## This json dump, loading back the data#####
-        json.dump(self.long_term_target, open(long_term_path, 'w'))
-        json.dump(self.targets, open(targets_path, 'w'))
-        json.dump(self.today_activity, open(today_activity_path, 'w'))
-        json.dump(self.summary, open(summary_path, 'w'))
-        json.dump(self.weekly_summary, open(weekly_summary_path, 'w'))
+
 
     def display_today(self):
         '''
@@ -279,12 +273,18 @@ class Journal:
     def generate_weekly_summary(self):
         print("Generating weekly summary")
 
+
+    def store_data(self):
+        ## This json dump, loading back the data#####
+        json.dump(self.long_term_target, open(long_term_path, 'w'))
+        json.dump(self.targets, open(targets_path, 'w'))
+        json.dump(self.today_activity, open(today_activity_path, 'w'))
+        json.dump(self.summary, open(summary_path, 'w'))
+        json.dump(self.weekly_summary, open(weekly_summary_path, 'w'))
+
+
     def end(self):
-        json.dump(self.long_term_target, open(long_term_path,"w"))
-        json.dump(self.targets, open(targets_path,"w"))
-        json.dump(self.today_activity, open(today_activity_path,'w'))
-        json.dump(self.summary, open(summary_path,'w'))
-        json.dump(self.weekly_summary, open(weekly_summary_path,'w'))
+        self.store_data()
         print("Data is stored")
 
 
