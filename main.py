@@ -1,7 +1,6 @@
 import json
 from os import path
-from datetime import date
-from datetime import datetime as dt
+from datetime import date, datetime as dt, timedelta
 import time
 from journal import Journal
 
@@ -81,7 +80,11 @@ def add_input(journal):
             print("Summary is added\n")
             journal.display_summary(date.today().strftime(DATE_FORMAT))
             print()
-        #TODO: Check to see if there there are already 7 summary, then make weekly summary
+            today = time_now.date()
+            lastWeek = (today - timedelta(days=7)).strftime(DATE_FORMAT)
+            if lastWeek in journal.summary:
+                print("Added?")
+                journal.generate_weekly_summary()
 
 
 

@@ -1,7 +1,6 @@
 from os import path
 import json
-from datetime import date, timedelta
-from datetime import datetime as dt
+from datetime import date, timedelta, datetime as dt
 
 DATE_FORMAT = "%Y-%m-%d"
 
@@ -134,16 +133,16 @@ class Journal:
         self.summary[d] = {self.attributes['pr']: productive_rate, self.attributes['eg']: exercise_goal,
                               self.attributes['tg']: time_on_game, self.attributes['ts']: time_on_sm, self.attributes['w']:weight}
 
-    def get_weekly_summary(self, d):
-        return self.summary[d]
+    def get_weekly_summary(self, num):
+        return self.summary[num]
 
-    def append_weekly_summary(self, d, star_date, end_date,productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
-        self.weekly_summary[d] = {self.attributes['st']:star_date,self.attributes['ed']:end_date,self.attributes['pr']: productive_rate,
+    def append_weekly_summary(self, num,star_date, end_date,productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
+        self.weekly_summary[num] = {self.attributes['st']:star_date,self.attributes['ed']:end_date,self.attributes['pr']: productive_rate,
                                   self.attributes['eg']: exercise_goal,
                               self.attributes['tg']: time_on_game, self.attributes['ts']: time_on_sm, self.attributes['w']:weight}
 
-    def update_weekly_summary(self, d, star_date, end_date, productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
-        self.weekly_summary[d] = {self.attributes['st']:star_date,self.attributes['ed']:end_date,self.attributes['pr']: productive_rate,
+    def update_weekly_summary(self, num, star_date, end_date, productive_rate, exercise_goal, time_on_game, time_on_sm, weight):
+        self.weekly_summary[num] = {self.attributes['st']:star_date,self.attributes['ed']:end_date,self.attributes['pr']: productive_rate,
                                   self.attributes['eg']: exercise_goal,
                               self.attributes['tg']: time_on_game, self.attributes['ts']: time_on_sm, self.attributes['w']:weight}
 
@@ -276,22 +275,25 @@ class Journal:
         today = date.today()
         lastWeek = (today - timedelta(days=7)).strftime(DATE_FORMAT)
         avgPr = 0.0
+        egAchieved = 0
         avgGtime = 0.0
         avgSmtime = 0.0
         avgW = 0.0
         if len(self.summary) >= 7:
             for entry in self.summary:
                 avgPr += self.summary[entry][self.attributes['pr']]
+                egAchieved += 1 if self.summary[entry][self.attributes['eg']] == 'achieved' else 0
                 avgGtime += self.summary[entry][self.attributes['tg']]
                 avgSmtime += self.summary[entry][self.attributes['ts']]
                 avgW += self.summary[entry][self.attributes['w']]
         avgPr /= 7
+        egAchieved = str(egAchieved) + "/7"
         avgGtime /= 7
         avgSmtime /= 7
         avgW /= 7
-        self.append_weekly_summary(self, today, lastWeek, today, avgPr, eg, avgGtime, avgSmtime, avgW)
-        # ^not sure what to do with d and eg
-        return
+        length = len(self.weekly_summary)
+        self.append_weekly_summary(self,str(length), lastWeek, today.strftime(DATE_FORMAT), avgPr, egAchieved,
+                                   avgGtime, avgSmtime, avgW)
 
 
 
